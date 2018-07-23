@@ -1,5 +1,6 @@
 package dominio
 
+import java.time.LocalDateTime
 import java.util.{Calendar, Date}
 
 import exception.ParqueaderoException
@@ -37,7 +38,7 @@ class Vigilante {
     }
   }
 
-  def calcularCobroParqueadero(vehiculo: Vehiculo, fechaIngreso:Date, fechaSalida:Date): Float = {
+  def calcularCobroParqueadero(vehiculo: Vehiculo, fechaIngreso: LocalDateTime, fechaSalida: LocalDateTime): Float = {
     var valorPagar = 0.0f
     val diasEntreDosFechas  = Util.getDiasEntreDosFechas(fechaIngreso, fechaSalida)
     val horasEntreDosFechas = Util.getHorasEntreDosFechas(fechaIngreso, fechaSalida)

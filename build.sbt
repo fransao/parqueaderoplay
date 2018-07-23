@@ -12,4 +12,15 @@ crossScalaVersions := Seq("2.11.12", "2.12.6")
 
 libraryDependencies += guice
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
-libraryDependencies += "com.h2database" % "h2" % "1.4.197"
+libraryDependencies += javaJdbc
+libraryDependencies += jdbc % Test
+//libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.41"
+libraryDependencies += "mysql" % "mysql-connector-java" % "8.0.11"
+// libraryDependencies += "com.typesafe.play" %% "play-slick" % "3.0.0"
+// libraryDependencies += "com.typesafe.play" %% "play-slick-evolutions" % "3.0.0"
+// libraryDependencies += "com.h2database" % "h2" % "1.4.197"
+// libraryDependencies += "com.typesafe.slick" %% "slick" % "3.2.0-M1"
+// libraryDependencies += "org.slf4j" % "slf4j-nop" % "1.6.4"
+// libraryDependencies += "com.typesafe.slick" %% "slick-hikaricp" % "3.2.0-M1"
+
+

@@ -1,14 +1,21 @@
 package util
 
 import java.time.LocalDateTime
-import java.util.Date
-
+import java.time.temporal.ChronoUnit
 
 object Util {
 
-  def getDiasEntreDosFechas(fechaInicial: Date, fechaFinal: Date): Int = {
+  def getDiasEntreDosFechas(fechaInicial: LocalDateTime, fechaFinal: LocalDateTime): Int = {
+      fechaInicial.until( fechaFinal, ChronoUnit.DAYS).toInt
+  }
 
-    val diferencia = ((fechaFinal.getTime() - fechaInicial.getTime()) / 1000).toInt
+  def getHorasEntreDosFechas(fechaInicial: LocalDateTime, fechaFinal: LocalDateTime): Int = {
+    (fechaInicial.until( fechaFinal, ChronoUnit.HOURS) % 24).toInt
+  }
+
+  /*def getDiasEntreDosFechas2(fechaInicial: LocalDateTime, fechaFinal: LocalDateTime): Int = {
+
+    val diferencia = ((fechaFinal - fechaInicial) / 1000).toInt
     var dias = 0
 
     if (diferencia > 86400) {
@@ -17,9 +24,9 @@ object Util {
     return dias
   }
 
-  def getHorasEntreDosFechas(fechaInicial: Date, fechaFinal: Date): Int = {
+  def getHorasEntreDosFechas2(fechaInicial: LocalDateTime, fechaFinal: LocalDateTime): Int = {
 
-    var diferencia = ((fechaFinal.getTime() - fechaInicial.getTime()) / 1000).toInt
+    var diferencia = ((fechaFinal - fechaInicial) / 1000).toInt
 
     var dias = 0
     var horas = 0
@@ -40,6 +47,5 @@ object Util {
 
     return horas
   }
-
-
+  */
 }
