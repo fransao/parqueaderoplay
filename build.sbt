@@ -16,6 +16,12 @@ libraryDependencies += javaJdbc
 libraryDependencies += jdbc % Test
 //libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.41"
 libraryDependencies += "mysql" % "mysql-connector-java" % "8.0.11"
+
+libraryDependencies += ws
+libraryDependencies += ehcache
+libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.9"
+
+
 // libraryDependencies += "com.typesafe.play" %% "play-slick" % "3.0.0"
 // libraryDependencies += "com.typesafe.play" %% "play-slick-evolutions" % "3.0.0"
 // libraryDependencies += "com.h2database" % "h2" % "1.4.197"

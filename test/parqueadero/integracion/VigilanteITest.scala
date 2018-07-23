@@ -33,4 +33,13 @@ class VigilanteITest extends FlatSpec {
     assert(database.estaVehiculoParqueado("SRA985") == false)
   }
 
+  "Mostrar lista de vehiculos parqueados" should "no ser vacia" in {
+    // arrange
+    var database = new ParqueoDatabase
+
+    assert(database.consultarVehiculosParqueados().size >0)
+
+
+  }
+
 }

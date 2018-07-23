@@ -85,7 +85,7 @@ class ParqueoDatabase {
       val connection = database.getConnection()
       val rs = connection.prepareStatement(ConstanteManager.DB_VEHICULOS_PARQUEADOS).executeQuery()
       while (rs.next()) {
-        listVehiculosParqueados += new ParqueoVehiculo(rs.getString("PLACA"), rs.getInt("TIPO_VEHICULO"), rs.getTimestamp("FECHA_INGRESO").toLocalDateTime, rs.getTimestamp("FECHA_SALIDA").toLocalDateTime, rs.getDouble("TOTAL"))
+        listVehiculosParqueados += new ParqueoVehiculo(rs.getString("PLACA"), rs.getInt("TIPO_VEHICULO"), rs.getTimestamp("FECHA_INGRESO").toLocalDateTime, null, rs.getDouble("TOTAL"))
       }
     }
     listVehiculosParqueados.toList

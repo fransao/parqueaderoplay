@@ -1,7 +1,9 @@
 package controllers
 
-  import javax.inject._
+  import java.time.LocalDateTime
 
+  import javax.inject._
+  import modelo.ParqueoVehiculo
   import play.api.libs.json._
   import play.api.libs.functional.syntax._
   import play.api.Logger
@@ -10,6 +12,60 @@ package controllers
   @Singleton
   class JsonParqueaderoController @Inject()(cc: ControllerComponents) (implicit assetsFinder: AssetsFinder) extends AbstractController(cc) {
 
+    implicit val vehiculoWrites = new Writes[ParqueoVehiculo] {
+      def writes(vehiculo: ParqueoVehiculo) = Json.obj(
+        "placa" -> vehiculo.placa,
+        "tipovehiculo" -> vehiculo.tipoVehiculo,
+        "fechaingreso" -> vehiculo.fechaIngreso,
+        "fechasalida" -> vehiculo.fechaSalida,
+        "valor" -> vehiculo.valor
+      )
+    }
+
+    implicit val vehiculoReads: Reads[ParqueoVehiculo] = (
+      (JsPath \ "placa").read[String] and
+        (JsPath \ "tipovehiculo").read[Int] and
+        (JsPath \ "fechaingreso").read[LocalDateTime] and
+        (JsPath \ "fechasalida").read[LocalDateTime] and
+        (JsPath \ "valor").read[Double]
+      )(ParqueoVehiculo.apply _)
+
+
+    def index2 = Action {
+      println("get JSValue from JsObject: " + getJsValueFromJsObject2)
+      println("get JsValue from Json: " + getJsValueFromJson2)
+      println(writeConverter)
+
+
+      println(stringUtilidadAndBusqueda)
+
+      //Results.Ok
+      Ok(views.html.index(s"Test Json..." ))
+    }
+
+    def getJsValueFromJsObject2() :JsValue = {
+      JsObject(Seq(
+        "placa" -> JsString("LLW98E"),
+        "tipovehiculo" -> JsNumber(1),
+        "fechaingreso" -> JsString("2018-07-20"),
+        "fechasalida" -> JsString("2018-09-20"),
+        "valor" -> JsNumber(10000)
+
+      ))
+    }
+
+    def getJsValueFromJson2() :JsValue = {
+      Json.obj(
+        "placa" -> "LLW98E",
+        "tipovehiculo" -> 1,
+        "fechaingreso" -> "2018-07-20",
+        "fechasalida" -> "2018-09-20",
+        "valor" -> 10000
+      )
+    }
+
+
+    // -------------------------------
     def index = Action {
 
       println("get JSValue from JsObject: " + getJsValueFromJsObject)
