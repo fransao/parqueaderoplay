@@ -1,12 +1,15 @@
 package dominio
 
-import java.time.LocalDateTime
-import java.util.{Calendar, Date}
+import java.time.{DayOfWeek, LocalDateTime}
 
 import exception.ParqueaderoException
+import modelo.ParqueoVehiculo
+import sql.ParqueoDatabase
 import util.{ConstanteManager, EnumTiempo, EnumTipoVehiculo, Util}
 
-class Vigilante {
+class Vigilante(parqueoDatabase:ParqueoDatabase) {
+
+  val database = parqueoDatabase
 
   def loadTarifa(): List[Tarifa] = {
     List(
@@ -17,23 +20,67 @@ class Vigilante {
     )
   }
 
-  def registrarIngresoVehiculoAParqueadero(vehiculo:Vehiculo, fechaIngreso:Date): Unit = {
+  def registrarIngresoVehiculoAParqueadero(vehiculo:Vehiculo, fechaIngreso:LocalDateTime): ParqueoVehiculo = {
+    var parqueoVehiculo: ParqueoVehiculo = null
+    //var convertToVehiculo: Vehiculo = null
+
     if (placaIniciaA(vehiculo.placa)) {
       validarDiaDomingoLunes(fechaIngreso)
     }
+
+    validarDisponibilidad(vehiculo)
+
+    if (estaVehiculoIngresado(vehiculo)) {
+      throw new ParqueaderoException(ConstanteManager.MSJ_VEHICULO_YA_ESTA_INGRESADO)
+    }
+
+    /*if (vehiculo.isInstanceOf[RequestVehiculo]) {
+      if (EnumTipoVehiculo.MOTO.equals(vehiculo.tipoVehiculo)) {
+        convertToVehiculo = vehiculo.asInstanceOf[Moto]
+      }
+      else if (EnumTipoVehiculo.CARRO.equals(vehiculo.tipoVehiculo)) {
+        convertToVehiculo = vehiculo.asInstanceOf[Carro]
+      }
+      else {
+        convertToVehiculo = vehiculo.asInstanceOf[Vehiculo]
+      }
+    }*/
+
+
+    if (vehiculo.isInstanceOf[Moto] || vehiculo.isInstanceOf[Carro]) {
+      parqueoVehiculo = ingresarVehiculo(vehiculo, fechaIngreso)
+    }
+    else {
+      throw new ParqueaderoException(ConstanteManager.MSJ_PARQUEO_SOLO_VEHICULOS)
+    }
+    parqueoVehiculo
+  }
+
+  def registrarSalidaVehiculoParqueadero(vehiculo: Vehiculo, fechaSalida: LocalDateTime): Unit = {
+    val salidaVehiculo = database.obtenerVehiculoParqueado(vehiculo.placa)
+
+    if (salidaVehiculo != null) {
+      salidaVehiculo.fechaSalidaV = fechaSalida
+      salidaVehiculo.valorV       = calcularCobroParqueadero(vehiculo, salidaVehiculo.fechaIngreso, fechaSalida)
+      database.salidaVehiculoParqueado(salidaVehiculo)
+    }
+  }
+
+  private[this] def ingresarVehiculo(vehiculo: Vehiculo, fechaIngreso: LocalDateTime): ParqueoVehiculo = {
+    database.registrarPlacaVehiculo(vehiculo)
+    val ingresoVehiculo = new ParqueoVehiculo(vehiculo.placa, vehiculo.tipoVehiculo.id, fechaIngreso, null, 0.0d)
+    ingresoVehiculo.fechaIngresoV = fechaIngreso
+    database.ingresarVehiculo(ingresoVehiculo)
+    database.obtenerVehiculoParqueado(vehiculo.placa)
   }
 
   def placaIniciaA(placa:String):Boolean = {
     placa.startsWith("a") || placa.startsWith("A")
   }
 
-  def validarDiaDomingoLunes(fechaIngreso:Date): Unit = {
-    val calendario = Calendar.getInstance()
-    calendario.setTime(fechaIngreso)
-
-    val diasemana = calendario.get(Calendar.DAY_OF_WEEK)
-
-    if (Calendar.SUNDAY != diasemana && diasemana != Calendar.MONDAY) {
+  def validarDiaDomingoLunes(fechaIngreso:LocalDateTime): Unit = {
+    val diasemana = fechaIngreso.getDayOfWeek
+    if (DayOfWeek.SUNDAY != diasemana && DayOfWeek.SUNDAY != diasemana) {
       throw new ParqueaderoException(ConstanteManager.MSJ_VEHICULO_NO_AUTORIZADO);
     }
   }
@@ -81,4 +128,21 @@ class Vigilante {
     return value
   }
 
+  def validarDisponibilidad(vehiculo: Vehiculo): Unit = {
+    val vehiculosParqueados = database.consultarVehiculosParqueadosByTipo(vehiculo.tipoVehiculo)
+    if (EnumTipoVehiculo.MOTO.equals(vehiculo.tipoVehiculo) && vehiculosParqueados.size >= ConstanteManager.INT_MAXIMO_MOTOS) throw new ParqueaderoException(ConstanteManager.MSJ_MAXIMO_MOTOS_PARQUEADOOS)
+    else if (EnumTipoVehiculo.CARRO.equals(vehiculo.tipoVehiculo) && vehiculosParqueados.size >= ConstanteManager.INT_MAXIMO_CARROS) throw new ParqueaderoException(ConstanteManager.MSJ_MAXIMO_CARROS_PARQUEADOOS)
+  }
+
+  def estaVehiculoIngresado(vehiculo: Vehiculo): Boolean = {
+    database.estaVehiculoParqueado(vehiculo.placa)
+  }
+
+  def obtenerVehiculoIngresado(vehiculo: Vehiculo): ParqueoVehiculo = {
+    database.obtenerVehiculoParqueado(vehiculo.placa)
+  }
+
+  def consultarVehiculosParqueados() : List[ParqueoVehiculo] = {
+    database.consultarVehiculosParqueados()
+  }
 }

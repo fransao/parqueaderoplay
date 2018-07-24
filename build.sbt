@@ -12,6 +12,7 @@ crossScalaVersions := Seq("2.11.12", "2.12.6")
 
 libraryDependencies += guice
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
+libraryDependencies += "org.mockito" % "mockito-core" % "2.18.3" % Test
 libraryDependencies += javaJdbc
 libraryDependencies += jdbc % Test
 //libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.41"

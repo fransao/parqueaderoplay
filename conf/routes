@@ -16,3 +16,8 @@ GET     /assets/*file               controllers.Assets.versioned(file)
 POST  /parqueadero                  controllers.ParqueaderoController.ingresovehiculo
 PUT   /parqueadero/:placa           controllers.ParqueaderoController.salidavehiculo(placa)
 GET   /parqueadero                  controllers.ParqueaderoController.vehiculosparqueados
+
+# JSON PARQUEADERO
+POST  /jsonparqueadero                  controllers.JsonParqueaderoController.ingresovehiculo
+PUT   /jsonparqueadero/:placa           controllers.JsonParqueaderoController.salidavehiculo(placa)
+GET   /jsonparqueadero                  controllers.JsonParqueaderoController.vehiculosparqueados

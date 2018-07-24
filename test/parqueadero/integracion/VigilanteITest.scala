@@ -2,44 +2,51 @@ package parqueadero.integracion
 
 import java.time.LocalDateTime
 
+import dominio.{Carro, Vehiculo, Vigilante}
 import modelo.ParqueoVehiculo
 import org.scalatest.FlatSpec
 import sql.ParqueoDatabase
+import util.EnumTipoVehiculo
 
 class VigilanteITest extends FlatSpec {
 
-  "Ingresar vehiculo" should " retornar true" in {
+  val database = new ParqueoDatabase
+
+  "Ingresar carro" should " retornar true" in {
     // arrange
-    val parqueoVehiculo = new ParqueoVehiculo("SRA985", tipoVehiculo = 1, fechaIngreso = LocalDateTime.now(), null, 0)
-    var database = new ParqueoDatabase
+    val vehiculo: Vehiculo = new Carro("SRA985", EnumTipoVehiculo.CARRO)
+    val parqueoVehiculo = new ParqueoVehiculo(vehiculo.placa, vehiculo.tipoVehiculo.id, fechaIngreso = LocalDateTime.now(), null, 0)
+    val vigilante = new Vigilante(database)
 
     // act
-    database.ingresarVehiculo(parqueoVehiculo)
+    vigilante.registrarIngresoVehiculoAParqueadero(vehiculo, parqueoVehiculo.fechaIngreso)
 
     // assert
-    assert(database.estaVehiculoParqueado(parqueoVehiculo.placa)== true)
+    assert(vigilante.estaVehiculoIngresado(vehiculo)== true)
   }
 
-  "Salida vehiculo" should "tener fecha de salida" in {
+  "Salida carro" should "tener fecha de salida" in {
     // arrange
-    var database = new ParqueoDatabase
-    var parqueoVehiculo = database.obtenerVehiculoParqueado("SRA985")
-    var salidaVehiculo = new ParqueoVehiculo(parqueoVehiculo.placa, parqueoVehiculo.tipoVehiculo,parqueoVehiculo.fechaIngreso, LocalDateTime.now(), 20)
+    val vigilante = new Vigilante(database)
+    val vehiculo: Vehiculo = new Carro("SRA985", EnumTipoVehiculo.CARRO)
+    var parqueoVehiculo = vigilante.obtenerVehiculoIngresado(vehiculo)
+    if (parqueoVehiculo == null) {
+      parqueoVehiculo = vigilante.registrarIngresoVehiculoAParqueadero(vehiculo, LocalDateTime.now())
+    }
+    var salidaVehiculo = new ParqueoVehiculo(parqueoVehiculo.placa, parqueoVehiculo.tipoVehiculo, parqueoVehiculo.fechaIngreso, LocalDateTime.now(), 0)
 
     // act
-    database.salidaVehiculoParqueado(salidaVehiculo)
+    vigilante.registrarSalidaVehiculoParqueadero(vehiculo, salidaVehiculo.fechaSalida)
 
     // assert
-    assert(database.estaVehiculoParqueado("SRA985") == false)
+    assert(vigilante.estaVehiculoIngresado(vehiculo) == false)
   }
 
   "Mostrar lista de vehiculos parqueados" should "no ser vacia" in {
     // arrange
-    var database = new ParqueoDatabase
+    val vigilante = new Vigilante(database)
 
-    assert(database.consultarVehiculosParqueados().size >0)
-
-
+    assert(vigilante.consultarVehiculosParqueados().size > 0)
   }
 
 }

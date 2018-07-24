@@ -30,8 +30,12 @@ package controllers
         (JsPath \ "valor").read[Double]
       )(ParqueoVehiculo.apply _)
 
+    def vehiculosparqueados = Action {
+      val json = Json.toJson(ParqueoVehiculo.list)
+      Ok(json)
+    }
 
-    def index2 = Action {
+    def ingresovehiculo = Action {
       println("get JSValue from JsObject: " + getJsValueFromJsObject2)
       println("get JsValue from Json: " + getJsValueFromJson2)
       println(writeConverter)
