@@ -18,6 +18,6 @@ PUT   /parqueadero/:placa           controllers.ParqueaderoController.salidavehi
 GET   /parqueadero                  controllers.ParqueaderoController.vehiculosparqueados
 
 # JSON PARQUEADERO
-POST  /jsonparqueadero                  controllers.JsonParqueaderoController.ingresovehiculo
-PUT   /jsonparqueadero/:placa           controllers.JsonParqueaderoController.salidavehiculo(placa)
-GET   /jsonparqueadero                  controllers.JsonParqueaderoController.vehiculosparqueados
+POST  /jsonparqueadero              controllers.JsonParqueaderoController.ingresovehiculo()
+PUT   /jsonparqueadero/:placa       controllers.JsonParqueaderoController.salidavehiculo(placa)
+GET   /jsonparqueadero              controllers.JsonParqueaderoController.vehiculosparqueados

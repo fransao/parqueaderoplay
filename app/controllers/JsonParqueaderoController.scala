@@ -1,48 +1,52 @@
 package controllers
 
-  import java.time.LocalDateTime
-
   import javax.inject._
   import modelo.ParqueoVehiculo
   import play.api.libs.json._
   import play.api.libs.functional.syntax._
-  import play.api.Logger
+  //import play.api.Logger
   import play.api.mvc._
 
   @Singleton
   class JsonParqueaderoController @Inject()(cc: ControllerComponents) (implicit assetsFinder: AssetsFinder) extends AbstractController(cc) {
-
-    implicit val vehiculoWrites = new Writes[ParqueoVehiculo] {
-      def writes(vehiculo: ParqueoVehiculo) = Json.obj(
-        "placa" -> vehiculo.placa,
-        "tipovehiculo" -> vehiculo.tipoVehiculo,
-        "fechaingreso" -> vehiculo.fechaIngreso,
-        "fechasalida" -> vehiculo.fechaSalida,
-        "valor" -> vehiculo.valor
-      )
-    }
-
-    implicit val vehiculoReads: Reads[ParqueoVehiculo] = (
-      (JsPath \ "placa").read[String] and
-        (JsPath \ "tipovehiculo").read[Int] and
-        (JsPath \ "fechaingreso").read[LocalDateTime] and
-        (JsPath \ "fechasalida").read[LocalDateTime] and
-        (JsPath \ "valor").read[Double]
-      )(ParqueoVehiculo.apply _)
 
     def vehiculosparqueados = Action {
       val json = Json.toJson(ParqueoVehiculo.list)
       Ok(json)
     }
 
-    def ingresovehiculo = Action {
-      println("get JSValue from JsObject: " + getJsValueFromJsObject2)
-      println("get JsValue from Json: " + getJsValueFromJson2)
-      println(writeConverter)
+    def ingresovehiculo() = Action(parse.json) { request =>
+      val parqueoResult = request.body.validate[ParqueoVehiculo]
+      parqueoResult.fold(
+        errors => {
+          BadRequest(Json.obj("status" ->"KO", "message" -> JsError.toJson(errors)))
+        },
+        parqueoVehiculo => {
+          ParqueoVehiculo.save(parqueoVehiculo)
+          Ok(Json.obj("status" ->"OK", "message" -> ("Placa '"+parqueoVehiculo.placa+"' saved.") ))
+        }
+      )
+    }
 
+    def ingresovehiculo4 = Action(parse.json) { request =>
+      val parqueoResult = request.body.validate[ParqueoVehiculo]
+      parqueoResult.fold(
+        errors => {
+          BadRequest(Json.obj("status" ->"KO", "message" -> JsError.toJson(errors)))
+        },
+        parqueoVehiculo => {
+          ParqueoVehiculo.save(parqueoVehiculo)
+          Ok(Json.obj("status" ->"OK", "message" -> ("Placa '"+parqueoVehiculo.placa+"' saved.") ))
+        }
+      )
+    }
 
-      println(stringUtilidadAndBusqueda)
+    def ingresovehiculo2 = Action {
+        //Results.Ok
+      Ok(views.html.index(s"Test Json..." ))
+    }
 
+    def salidavehiculo(placa:String) = Action {
       //Results.Ok
       Ok(views.html.index(s"Test Json..." ))
     }

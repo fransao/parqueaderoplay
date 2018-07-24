@@ -1,5 +1,7 @@
 package parqueadero.unitaria
 
+import java.time.LocalDateTime
+
 import dominio.{Carro, Moto, Vehiculo}
 import org.scalatest.FlatSpec
 import util.{ConstanteManager, EnumTipoVehiculo}
@@ -17,6 +19,8 @@ class VehiculoUTest extends FlatSpec {
   }
 
   "Placa de la moto" should ConstanteManager.MOTO_PLACA_TEST in {
+
+    println(LocalDateTime.now())
     val moto = new Moto(ConstanteManager.MOTO_PLACA_TEST, EnumTipoVehiculo.MOTO, 600)
     assert(ConstanteManager.MOTO_PLACA_TEST == moto.placa)
   }

@@ -1,7 +1,6 @@
 package parqueadero.unitaria
 
 import java.time.LocalDateTime
-import java.util.Calendar
 
 import dominio.{Moto, Vigilante}
 import exception.ParqueaderoException
