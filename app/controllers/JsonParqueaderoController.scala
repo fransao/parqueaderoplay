@@ -10,6 +10,10 @@ package controllers
   @Singleton
   class JsonParqueaderoController @Inject()(cc: ControllerComponents) (implicit assetsFinder: AssetsFinder) extends AbstractController(cc) {
 
+    def indexparking() = Action {
+      Ok(views.html.mainparqueadero())
+    }
+
     def vehiculosparqueados = Action {
       val json = Json.toJson(ParqueoVehiculo.list)
       Ok(json)
