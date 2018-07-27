@@ -1,0 +1,35 @@
+@()(implicit assetsFinder: AssetsFinder)
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Ceiba Parking</title>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+    <script type='text/javascript' src='@routes.Assets.versioned("javascripts/bootstrap.min.js")'></script>
+    <script type='text/javascript' src='@routes.Assets.versioned("javascripts/jquery-3.3.1.min.js")'></script>
+</head>
+<body >
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="#">Parking</a>
+            <form id="listasymbolform" class="navbar-form pull-right">
+                <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
+
+                <a href="@routes.JsonParqueaderoController.vehiculosparqueados">Vehiculos</a>
+                <button type="submit" class="btn">Vehiculos parqueados</button>
+                <button type="submit" class="btn">Ingresar Vehiculo</button>
+                <button type="submit" class="btn">Salida Vehiculo</button>
+            </form>
+
+        </div>
+    </div>
+  </div>
+
+  <div id="stocks" class="container">
+
+  </div>
+</body>
+</html>
