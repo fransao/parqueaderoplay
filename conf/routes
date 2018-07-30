@@ -10,7 +10,7 @@ GET     /count                      controllers.CountController.count
 GET     /message                    controllers.AsyncController.message
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(file)
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file:Asset)
 
 # PARQUEADERO
 POST  /parqueadero                  controllers.ParqueaderoController.ingresovehiculo
@@ -25,3 +25,17 @@ GET   /jsonparqueadero              controllers.JsonParqueaderoController.vehicu
 GET   /index                        controllers.JsonParqueaderoController.indexparking
 
 GET   /indexlayout                  controllers.LayoutParqueaderoController.indexlayout
+
+
+# CRUD PARQUEADERO
+GET   /parking                      controllers.ParkingController.index
+GET   /parking/create               controllers.ParkingController.create
+GET   /parking/:placa               controllers.ParkingController.show(placa:String)
+GET   /parking/edit/:placa          controllers.ParkingController.edit(placa:String)
+POST  /parking/edit                 controllers.ParkingController.update
+POST  /parking/create               controllers.ParkingController.save
+GET   /parking/delete/:placa        controllers.ParkingController.destroy(placa:String)
+
+
+
+

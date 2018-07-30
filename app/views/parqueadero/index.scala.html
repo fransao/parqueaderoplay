@@ -1,0 +1,32 @@
+@(vehiculos: List[modelo.ParqueoVehiculo])
+
+<html>
+  <head>
+    <title>Vehiculos parqueados</title>
+  </head>
+  <body>
+    <h1>Vehiculos Parqueados</h1>
+    <table class="table">
+      <caption>Vehiculos Parqueados</caption>
+      <thead class="thead-light">
+        <tr>
+          <th>Placa</th>
+          <th>Tipo Vehiculo</th>
+          <th>Fecha ingreso</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for(vehiculo <- vehiculos) {
+        <tr >
+          <td><a href="#">@vehiculo.placa</a></td>
+          <td>@vehiculo.tipoVehiculo</td>
+          <td>@vehiculo.fechaIngreso</td>
+        </tr>
+      }
+      </tbody>
+    </table>
+
+  </body>
+
+</html>

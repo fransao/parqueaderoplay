@@ -53,6 +53,21 @@ class ParqueoDatabase {
 
   }
 
+  def estaPlacaVehiculoRegistrada(placa: String): Boolean = {
+    var placaRegistrada = false
+
+    withMyDatabase { database =>
+      val connection = database.getConnection()
+      var ps = connection.prepareStatement(ConstanteManager.DB_CONSULTAR_PLACA_VEHICULO)
+      ps.setString(1, placa)
+      val rs = ps.executeQuery()
+      if (rs.next()) {
+        placaRegistrada = true
+      }
+    }
+    placaRegistrada
+  }
+
   def salidaVehiculoParqueado(vehiculo: ParqueoVehiculo): Unit = {
 
     withMyDatabase { database =>

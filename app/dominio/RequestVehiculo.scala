@@ -1,5 +1,7 @@
 package dominio
 
+import play.api.data._
+import play.api.data.Forms._
 import util.EnumTipoVehiculo
 
 class RequestVehiculo(placa: String, tipoVehiculo: EnumTipoVehiculo.Value, val cilindraje: Int) extends Vehiculo(placa, tipoVehiculo) {
@@ -11,4 +13,5 @@ class RequestVehiculo(placa: String, tipoVehiculo: EnumTipoVehiculo.Value, val c
   def getCarro(): Carro = {
     new Carro(placa, tipoVehiculo)
   }
+
 }

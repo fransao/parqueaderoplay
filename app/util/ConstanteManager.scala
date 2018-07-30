@@ -22,6 +22,7 @@ object ConstanteManager {
   val DB_SALIDA_VEHICULO      = "UPDATE parqueaderodb.parqueo_vehiculo SET FECHA_SALIDA= ?, TOTAL=? WHERE PLACA=? AND FECHA_SALIDA IS NULL"
   val DB_VEHICULOS_PARQUEADOS = "SELECT * FROM parqueaderodb.parqueo_vehiculo WHERE FECHA_SALIDA IS NULL"
   val DB_VEHICULOS_PARQUEADOS_BY_TYPE = "SELECT * FROM parqueaderodb.parqueo_vehiculo WHERE FECHA_SALIDA IS NULL AND TIPO_VEHICULO=?"
-  val DB_CONSULTAR_VEHICULO   = "SELECT * FROM parqueaderodb.parqueo_vehiculo WHERE FECHA_SALIDA IS NULL AND PLACA=?"
+  val DB_CONSULTAR_VEHICULO           = "SELECT * FROM parqueaderodb.parqueo_vehiculo WHERE FECHA_SALIDA IS NULL AND PLACA=?"
+  val DB_CONSULTAR_PLACA_VEHICULO     = "SELECT * FROM parqueaderodb.vehiculo WHERE PLACA=?"
 
  }

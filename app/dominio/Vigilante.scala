@@ -67,7 +67,11 @@ class Vigilante(parqueoDatabase:ParqueoDatabase) {
   }
 
   private[this] def ingresarVehiculo(vehiculo: Vehiculo, fechaIngreso: LocalDateTime): ParqueoVehiculo = {
-    database.registrarPlacaVehiculo(vehiculo)
+
+    if (!database.estaPlacaVehiculoRegistrada(vehiculo.placa)) {
+      database.registrarPlacaVehiculo(vehiculo)
+    }
+
     val ingresoVehiculo = new ParqueoVehiculo(vehiculo.placa, vehiculo.tipoVehiculo.id, fechaIngreso, null, 0.0d)
     ingresoVehiculo.fechaIngresoV = fechaIngreso
     database.ingresarVehiculo(ingresoVehiculo)
