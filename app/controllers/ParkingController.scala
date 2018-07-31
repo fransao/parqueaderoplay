@@ -8,7 +8,7 @@ import modelo.ParqueoVehiculo
 import play.api.data._
 import play.api.data.Forms._
 import play.api.Logger
-import play.api.data.format.Formatter
+import play.api.data.format.Formats._
 import play.api.mvc.{request, _}
 import sql.ParqueoDatabase
 import util.EnumTipoVehiculo
@@ -36,9 +36,9 @@ class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFind
 
   val vehiculoForm = Form(
     mapping(
-      "placa" -> text,
-      "tipoVehiculo" -> text, //Forms.of[EnumTipoVehiculo.Value],
-      "cilindraje" -> number
+      "placa" -> of[String],//nonEmptyText(minLength = 6, maxLength = 6),
+      "tipoVehiculo" ->  of[String],//nonEmptyText, //Forms.of[EnumTipoVehiculo.Value],
+      "cilindraje" -> of[Int]//number
     )(VehiculoDto.apply)(VehiculoDto.unapply)
   )
 
@@ -52,7 +52,8 @@ class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFind
   def create = Action { implicit request =>
     // Logger.info("Crear vehiculo.")
 
-    //Ok(views.html.parqueadero.create.render(vehiculoForm))
+    Ok(views.html.parqueadero.create.render(vehiculoForm))
+    /*
     vehiculoForm.bindFromRequest.fold(
       formWithErrors => {
         // binding failure, you retrieve the form containing errors:
@@ -62,6 +63,7 @@ class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFind
         Ok(views.html.parqueadero.create.render(vehiculoForm))
       }
     )
+    */
   }
 
   def show (placa: String) = Action {
@@ -84,6 +86,11 @@ class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFind
 
   def save  = Action { implicit request =>
     Logger.info("Guardar vehiculo.")
+
+    val formVehiculoDto = vehiculoForm.bindFromRequest
+    println(formVehiculoDto)
+    val vehiculoDto = formVehiculoDto
+    println(vehiculoDto)
 
     val vehiculoData = request.body
     println("ingreso vehiculo" + vehiculoData)

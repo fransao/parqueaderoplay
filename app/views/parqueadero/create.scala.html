@@ -1,6 +1,5 @@
 
-@(vehiculoForm: Form[dominio.VehiculoDto])
-<!--(implicit messagesProvider: MessagesProvider) -->
+@(vehiculoForm: Form[dominio.VehiculoDto])(implicit messages: Messages)
 
 @import helper._
 
@@ -13,10 +12,10 @@
     <h1>Ingresar Vehiculo</h1>
     @helper.form(action = routes.ParkingController.save) {
 
-      <!--helper.inputText(field = vehiculoForm("placa")) @* <- takes MessagesProvider *@
-      helper.inputText(vehiculoForm("tipoVehiculo"))
-      helper.inputText(vehiculoForm("cilindraje"))
-      -->
+      @helper.inputText(vehiculoForm("placa"))
+      @helper.inputText(vehiculoForm("tipoVehiculo"))
+      @helper.inputText(vehiculoForm("cilindraje"))
+
       <input type="text" name="" id="">
       <select name="enumTipoVehiculo">
         @for(eTipoVehiculo <- util.EnumTipoVehiculo.values){
