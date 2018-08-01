@@ -24,5 +24,7 @@ object ConstanteManager {
   val DB_VEHICULOS_PARQUEADOS_BY_TYPE = "SELECT * FROM parqueaderodb.parqueo_vehiculo WHERE FECHA_SALIDA IS NULL AND TIPO_VEHICULO=?"
   val DB_CONSULTAR_VEHICULO           = "SELECT * FROM parqueaderodb.parqueo_vehiculo WHERE FECHA_SALIDA IS NULL AND PLACA=?"
   val DB_CONSULTAR_PLACA_VEHICULO     = "SELECT * FROM parqueaderodb.vehiculo WHERE PLACA=?"
+  val DB_DELETE_VEHICULO_INGRESADO    = "DELETE FROM parqueaderodb.parqueo_vehiculo WHERE PLACA = ?";
+
 
  }

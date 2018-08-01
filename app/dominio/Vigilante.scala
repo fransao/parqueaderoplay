@@ -56,13 +56,20 @@ class Vigilante(parqueoDatabase:ParqueoDatabase) {
     parqueoVehiculo
   }
 
-  def registrarSalidaVehiculoParqueadero(vehiculo: Vehiculo, fechaSalida: LocalDateTime): Unit = {
+  def registrarSalidaVehiculoParqueadero(vehiculo: Vehiculo, fechaSalida: LocalDateTime): Double = {
     val salidaVehiculo = database.obtenerVehiculoParqueado(vehiculo.placa)
+    var sqlUpdate: Int = 2
 
     if (salidaVehiculo != null) {
       salidaVehiculo.fechaSalidaV = fechaSalida
       salidaVehiculo.valorV       = calcularCobroParqueadero(vehiculo, salidaVehiculo.fechaIngreso, fechaSalida)
-      database.salidaVehiculoParqueado(salidaVehiculo)
+      sqlUpdate = database.salidaVehiculoParqueado(salidaVehiculo)
+    }
+
+    if (sqlUpdate == 1 && salidaVehiculo.valorV > 0) {
+      return salidaVehiculo.valorV
+    } else {
+      return 0
     }
   }
 
@@ -149,4 +156,13 @@ class Vigilante(parqueoDatabase:ParqueoDatabase) {
   def consultarVehiculosParqueados() : List[ParqueoVehiculo] = {
     database.consultarVehiculosParqueados()
   }
+
+  def deleteVehiculoIngresado(placa: String) : Boolean = {
+    val sqlUpdate = database.deleteVehiculoIngresado(placa)
+    if (sqlUpdate == 1)
+      return true
+    else
+      return false
+  }
+
 }

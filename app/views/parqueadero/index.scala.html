@@ -6,6 +6,7 @@
   </head>
   <body>
     <h1>Vehiculos Parqueados</h1>
+    <div><a href="@routes.ParkingController.create">Ingresar Vehiculo</a>  </div>
     <table class="table">
       <caption>Vehiculos Parqueados</caption>
       <thead class="thead-light">
@@ -19,9 +20,11 @@
       <tbody>
         @for(vehiculo <- vehiculos) {
         <tr >
-          <td><a href="#">@vehiculo.placa</a></td>
+          <td><a href="@routes.ParkingController.show(vehiculo.placa)">@vehiculo.placa</a></td>
           <td>@vehiculo.tipoVehiculo</td>
           <td>@vehiculo.fechaIngreso</td>
+          <td><a href="@routes.ParkingController.edit(vehiculo.placa)">Salida vehiculo</a></td>
+          <td><a href="@routes.ParkingController.destroy(vehiculo.placa)">Delete</a></td>
         </tr>
       }
       </tbody>

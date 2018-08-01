@@ -4,17 +4,17 @@
 
 <html>
   <head>
-    <title>Ingresar vehiculo</title>
+    <title>Salida vehiculo</title>
   </head>
   <body>
-    <h1>Ingresar Vehiculo</h1>
-    @helper.form(action = routes.ParkingController.save) {
+    <h1>Salida Vehiculo</h1>
+    @helper.form(action = routes.ParkingController.update) {
 
       @helper.inputText(vehiculoForm("placa"))
       @helper.select(vehiculoForm("tipoVehiculo"), util.EnumTipoVehiculo.values.toSeq.map(tipoV => tipoV.id+"" -> tipoV.toString))
       @helper.inputText(vehiculoForm("cilindraje"))
 
-      <input type="submit" value="Ingresar Vehiculo">
+      <input type="submit" value="Salida Vehiculo">
     }
 
   </body>

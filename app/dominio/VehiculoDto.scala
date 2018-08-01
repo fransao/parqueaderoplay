@@ -4,7 +4,7 @@ object VehiculoDto {
   import play.api.data.Forms._
   import play.api.data.Form
 
-  case class Data (placa: String, tipoVehiculo: String, cilindraje: Int) {}
+  case class Data (placa: String, tipoVehiculo: String, val cilindraje: Int) {}
 
   val vehiculoForm = Form(
     mapping(

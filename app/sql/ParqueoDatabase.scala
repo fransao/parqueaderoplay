@@ -19,7 +19,7 @@ class ParqueoDatabase {
       name = "parqueaderodb",
       config = Map(
         "username" -> "root",
-        "password" -> ""
+        "password" -> "root"
       )
     )(block)
   }
@@ -68,7 +68,7 @@ class ParqueoDatabase {
     placaRegistrada
   }
 
-  def salidaVehiculoParqueado(vehiculo: ParqueoVehiculo): Unit = {
+  def salidaVehiculoParqueado(vehiculo: ParqueoVehiculo): Int = {
 
     withMyDatabase { database =>
       val connection = database.getConnection()
@@ -138,6 +138,18 @@ class ParqueoDatabase {
       }
     }
     listVehiculosParqueados.toList
+  }
+
+  def deleteVehiculoIngresado(placa: String): Int = {
+
+    withMyDatabase { database =>
+      val connection = database.getConnection()
+      var ps = connection.prepareStatement(ConstanteManager.DB_DELETE_VEHICULO_INGRESADO)
+      ps.setString(1, placa)
+      ps.executeUpdate()
+    }
+
+
   }
 
 }
