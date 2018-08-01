@@ -11,7 +11,7 @@ package controllers
   class JsonParqueaderoController @Inject()(cc: ControllerComponents) (implicit assetsFinder: AssetsFinder) extends AbstractController(cc) {
 
     def indexparking() = Action {
-      Ok(views.html.mainparqueadero())
+      Ok(views.html.index2(""))
     }
 
     def vehiculosparqueados = Action {
@@ -47,12 +47,12 @@ package controllers
 
     def ingresovehiculo2 = Action {
         //Results.Ok
-      Ok(views.html.index(s"Test Json..." ))
+      Ok(views.html.index2(s"Test Json..." ))
     }
 
     def salidavehiculo(placa:String) = Action {
       //Results.Ok
-      Ok(views.html.index(s"Test Json..." ))
+      Ok(views.html.index2(s"Test Json..." ))
     }
 
     def getJsValueFromJsObject2() :JsValue = {
@@ -88,7 +88,7 @@ package controllers
       println(stringUtilidadAndBusqueda)
 
       //Results.Ok
-      Ok(views.html.index(s"Test Json..." ))
+      Ok(views.html.index2(s"Test Json..." ))
 
     }
 

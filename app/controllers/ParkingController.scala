@@ -21,13 +21,13 @@ class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFind
     Logger.info("Vehiculos parqueados.")
 
     val vigilante = new Vigilante(database)
-    Ok(views.html.parqueadero.index(vigilante.consultarVehiculosParqueados()))
+    Ok(views.html.parking.index(vigilante.consultarVehiculosParqueados()))
   }
 
   def create = Action { implicit request =>
     // Logger.info("Crear vehiculo.")
 
-    Ok(views.html.parqueadero.create(vehiculoForm))
+    Ok(views.html.parking.create(vehiculoForm))
     /*
     vehiculoForm.bindFromRequest.fold(
       formWithErrors => {
@@ -49,7 +49,7 @@ class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFind
     val vehiculo = vigilante.obtenerVehiculoIngresado(new Vehiculo(placa, EnumTipoVehiculo.CARRO))
     //val anyData = Map("placa" -> vehiculo.placa, "tipoVehiculo" -> vehiculo.tipoVehiculo.toString, "cilindraje" -> "")
 
-    Ok(views.html.parqueadero.show(vehiculo))
+    Ok(views.html.parking.show(vehiculo))
 
   }
 
@@ -61,7 +61,7 @@ class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFind
     val vehiculo = vigilante.obtenerVehiculoIngresado(new Vehiculo(placa, EnumTipoVehiculo.CARRO))
     val anyData = Map("placa" -> vehiculo.placa, "tipoVehiculo" -> vehiculo.tipoVehiculo.toString, "cilindraje" -> "")
 
-    Ok(views.html.parqueadero.edit(vehiculoForm.bind(anyData)))
+    Ok(views.html.parking.edit(vehiculoForm.bind(anyData)))
   }
 
   def update = Action { implicit request =>
@@ -71,7 +71,7 @@ class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFind
       formWithErrors => {
         println("Error: " + formWithErrors)
         // binding failure, you retrieve the form containing errors:
-        BadRequest(views.html.parqueadero.edit(formWithErrors))
+        BadRequest(views.html.parking.edit(formWithErrors))
       },
       vehiculoData => {
         println("Data: " + vehiculoData)
@@ -85,7 +85,7 @@ class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFind
         } else if (vehiculoData.tipoVehiculo.toInt == 2) {
           valorPagar = vigilante.registrarSalidaVehiculoParqueadero(new Moto(vehiculoData.placa, EnumTipoVehiculo.MOTO, vehiculoData.cilindraje), parqueoVehiculo.fechaIngreso)
         }
-        Ok(views.html.parqueadero.index2(s"Vehiculo ${vehiculoData.placa}, valor a pagar: $valorPagar"))
+        Ok(views.html.parking.index2(s"Vehiculo ${vehiculoData.placa}, valor a pagar: $valorPagar"))
       })
   }
 
@@ -96,7 +96,7 @@ class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFind
       formWithErrors => {
         println("Error: " + formWithErrors)
         // binding failure, you retrieve the form containing errors:
-        BadRequest(views.html.parqueadero.create(formWithErrors))
+        BadRequest(views.html.parking.create(formWithErrors))
       },
       vehiculoData => {
         println("Data: " + vehiculoData)
@@ -113,7 +113,7 @@ class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFind
         }
 
         if (parqueoVehiculo == null) {
-          Ok(views.html.parqueadero.create(vehiculoForm))
+          Ok(views.html.parking.create(vehiculoForm))
         } else {
           Redirect(routes.ParkingController.index)
         }
