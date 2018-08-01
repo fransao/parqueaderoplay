@@ -1,7 +1,16 @@
 package dominio
 
-import util.EnumTipoVehiculo
+object VehiculoDto {
+  import play.api.data.Forms._
+  import play.api.data.Form
 
-case class VehiculoDto(placa: String, tipoVehiculo: String, val cilindraje: Int) {
+  case class Data (placa: String, tipoVehiculo: String, cilindraje: Int) {}
 
+  val vehiculoForm = Form(
+    mapping(
+      "placa" -> nonEmptyText(minLength = 6, maxLength = 6),
+      "tipoVehiculo" -> nonEmptyText,
+      "cilindraje" -> number
+    )(Data.apply)(Data.unapply)
+  )
 }

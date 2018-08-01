@@ -15,11 +15,11 @@ class ParqueoDatabase {
   def withMyDatabase[T](block: Database => T) = {
     Databases.withDatabase(
       driver = "com.mysql.jdbc.Driver",
-      url = "jdbc:mysql://localhost:3306/parqueaderodb",
+      url = "jdbc:mysql://localhost:3306/parqueaderodb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
       name = "parqueaderodb",
       config = Map(
         "username" -> "root",
-        "password" -> "root"
+        "password" -> ""
       )
     )(block)
   }

@@ -19,7 +19,7 @@ import play.i18n.Lang
 
 @Singleton
 class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFinder: AssetsFinder) extends AbstractController(cc) with I18nSupport {
-
+  import VehiculoDto._
   import play.api.data.validation.Constraints._
 
   /*implicit def matchFilterFormat: Formatter[EnumTipoVehiculo.Value] = new Formatter[EnumTipoVehiculo.Value] {
@@ -32,8 +32,16 @@ class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFind
   }
 */
 
-  val database = new ParqueoDatabase
+  /*  C:\ProgramData\MySQL\MySQL Server 5.7
+  [mysql]
+default-character-set=utf8
+default_time_zone = 'UTC'
+#time_zone = 'America/New_York';
 
+   */
+
+  val database = new ParqueoDatabase
+/*
   val vehiculoForm = Form(
     mapping(
       "placa" -> of[String],//nonEmptyText(minLength = 6, maxLength = 6),
@@ -41,6 +49,7 @@ class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFind
       "cilindraje" -> of[Int]//number
     )(VehiculoDto.apply)(VehiculoDto.unapply)
   )
+  */
 
   def index = Action {
     Logger.info("Vehiculos parqueados.")
@@ -52,7 +61,7 @@ class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFind
   def create = Action { implicit request =>
     // Logger.info("Crear vehiculo.")
 
-    Ok(views.html.parqueadero.create.render(vehiculoForm))
+    Ok(views.html.parqueadero.create(vehiculoForm))
     /*
     vehiculoForm.bindFromRequest.fold(
       formWithErrors => {
@@ -87,14 +96,8 @@ class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFind
   def save  = Action { implicit request =>
     Logger.info("Guardar vehiculo.")
 
-    val formVehiculoDto = vehiculoForm.bindFromRequest
-    println(formVehiculoDto)
-    val vehiculoDto = formVehiculoDto
-    println(vehiculoDto)
-
-    val vehiculoData = request.body
-    println("ingreso vehiculo" + vehiculoData)
-    val vehiculo: Vehiculo = new Carro("SRA985", EnumTipoVehiculo.CARRO)
+    val vehiculoDto = vehiculoForm.bindFromRequest.get
+    val vehiculo: Vehiculo = new Carro(vehiculoDto.placa, EnumTipoVehiculo.CARRO)
     val parqueoVehiculo = new ParqueoVehiculo(vehiculo.placa, vehiculo.tipoVehiculo.id, fechaIngreso = LocalDateTime.now(), null, 0)
     val vigilante = new Vigilante(database)
 
