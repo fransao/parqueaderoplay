@@ -21,7 +21,7 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 POST  /jsonparqueadero              controllers.JsonParqueaderoController.ingresovehiculo
 PUT   /jsonparqueadero/:placa       controllers.JsonParqueaderoController.salidavehiculo(placa)
 GET   /jsonparqueadero              controllers.JsonParqueaderoController.vehiculosparqueados
-#GET   /index                        controllers.JsonParqueaderoController.indexparking
+#GET   /index                       controllers.JsonParqueaderoController.indexparking
 
 
 #GET   /indexlayout                  controllers.LayoutParqueaderoController.indexlayout
