@@ -34,7 +34,7 @@ class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFind
 
       // implicit val flash = ("danger" -> "Por favor ingrese los campos obligatorios")
       // flashing("danger" -> "Por favor ingrese los campos obligatorios")
-      BadRequest(views.html.parqueadero.create(vehiculoForm))
+      BadRequest(views.html.parking.create(vehiculoForm))
     } else {
       // flashing("success" -> "Vehiculo ingresado correctamente")
       Ok(views.html.parking.create(vehiculoForm))
@@ -43,10 +43,10 @@ class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFind
     vehiculoForm.bindFromRequest.fold(
       formWithErrors => {
         // binding failure, you retrieve the form containing errors:
-        BadRequest(views.html.parqueadero.create.render(formWithErrors))
+        BadRequest(views.html.parking.create.render(formWithErrors))
       },
       vehiculoData => {
-        Ok(views.html.parqueadero.create.render(vehiculoForm))
+        Ok(views.html.parking.create.render(vehiculoForm))
       }
     )
     */

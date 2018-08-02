@@ -21,15 +21,14 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 POST  /jsonparqueadero              controllers.JsonParqueaderoController.ingresovehiculo
 PUT   /jsonparqueadero/:placa       controllers.JsonParqueaderoController.salidavehiculo(placa)
 GET   /jsonparqueadero              controllers.JsonParqueaderoController.vehiculosparqueados
-GET   /index                        controllers.JsonParqueaderoController.indexparking
+#GET   /index                        controllers.JsonParqueaderoController.indexparking
 
 
 #GET   /indexlayout                  controllers.LayoutParqueaderoController.indexlayout
 
 
 # CRUD PARQUEADERO
-GET   /index2                       controllers.HomeController.index
-
+GET   /index                        controllers.HomeController.index
 GET     /parking                    controllers.ParkingController.index
 GET     /parking/create             controllers.ParkingController.create
 GET     /parking/:placa             controllers.ParkingController.show(placa:String)
