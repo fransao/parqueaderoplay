@@ -5,11 +5,14 @@ import java.time.LocalDateTime
 import dominio._
 import javax.inject._
 import modelo.ParqueoVehiculo
-import play.api.Logger
+import play.api.{Logger, mvc}
 import play.api.mvc.{request, _}
 import sql.ParqueoDatabase
 import util.EnumTipoVehiculo
 import play.api.i18n._
+import play.mvc.Http
+
+// import views.html.errors._
 
 @Singleton
 class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFinder: AssetsFinder) extends AbstractController(cc) with I18nSupport {
@@ -27,7 +30,15 @@ class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFind
   def create = Action { implicit request =>
     // Logger.info("Crear vehiculo.")
 
-    Ok(views.html.parking.create(vehiculoForm))
+    if (vehiculoForm.hasErrors) {
+
+      // implicit val flash = ("danger" -> "Por favor ingrese los campos obligatorios")
+      // flashing("danger" -> "Por favor ingrese los campos obligatorios")
+      BadRequest(views.html.parqueadero.create(vehiculoForm))
+    } else {
+      // flashing("success" -> "Vehiculo ingresado correctamente")
+      Ok(views.html.parking.create(vehiculoForm))
+    }
     /*
     vehiculoForm.bindFromRequest.fold(
       formWithErrors => {

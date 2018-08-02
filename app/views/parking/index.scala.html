@@ -2,7 +2,12 @@
 
 @layout("Vehiculos parqueados") {
   <h1>Vehiculos Parqueados</h1>
-  <div><a href="@routes.ParkingController.create">Ingresar Vehiculo</a>  </div>
+  <div>
+      <a class="btn btn-success" href="@routes.ParkingController.create">
+        <i class="glyphicon glyphicon-plus-sign"></i>
+        Ingresar Vehiculo
+      </a>
+  </div>
   <table class="table">
     <caption>Vehiculos Parqueados</caption>
     <thead class="thead-light">
@@ -18,11 +23,22 @@
     <tbody>
     @for(vehiculo <- vehiculos) {
         <tr >
-            <td><a href="@routes.ParkingController.show(vehiculo.placa)">@vehiculo.placa</a></td>
+            <td><a class="btn btn-link" href="@routes.ParkingController.show(vehiculo.placa)">@vehiculo.placa</a></td>
             <td>@vehiculo.tipoVehiculo</td>
             <td>@vehiculo.fechaIngreso</td>
-            <td><a href="@routes.ParkingController.edit(vehiculo.placa)">Salida vehiculo</a></td>
-            <td><a href="@routes.ParkingController.destroy(vehiculo.placa)">Delete</a></td>
+            <td><a class="btn btn-primary" href="@routes.ParkingController.edit(vehiculo.placa)">Salida vehiculo</a></td>
+            <td>
+                <button class="btn btn-danger" onclick="sendDeleteRequest(
+                '@routes.ParkingController.destroy(vehiculo.placa)',
+                '@routes.ParkingController.index()'
+                )">Delete</button>
+
+                <!--
+                <a class="btn btn-danger" href="@routes.ParkingController.destroy(vehiculo.placa)">
+                    Delete
+                </a>
+                -->
+            </td>
         </tr>
     }
     </tbody>

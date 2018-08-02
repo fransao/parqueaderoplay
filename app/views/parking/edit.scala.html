@@ -4,11 +4,14 @@
 @layout("Salida vehiculo") {
   <h1>Salida Vehiculo</h1>
   @helper.form(action = routes.ParkingController.update) {
-    @helper.inputText(vehiculoForm("placa"))
-    @helper.select(vehiculoForm("tipoVehiculo"), util.EnumTipoVehiculo.values.toSeq.map(tipoV => tipoV.id+"" -> tipoV.toString))
-    @helper.inputText(vehiculoForm("cilindraje"))
+    @helper.inputText(vehiculoForm("placa"), 'class -> "form-control")
+    @helper.select(vehiculoForm("tipoVehiculo"), util.EnumTipoVehiculo.values.toSeq.map(tipoV => tipoV.id+"" -> tipoV.toString), 'class -> "form-control")
+    @helper.inputText(vehiculoForm("cilindraje"), 'class -> "form-control")
 
-    <input type="submit" value="Salida Vehiculo">
+    <button class="btn btn-success" type="submit">
+      <i class="glyphicon glyphicon-plus"></i>
+      Salida Vehiculo
+    </button>
   }
 }
 

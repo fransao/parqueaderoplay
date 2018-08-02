@@ -10,6 +10,23 @@ package controllers
   @Singleton
   class JsonParqueaderoController @Inject()(cc: ControllerComponents) (implicit assetsFinder: AssetsFinder) extends AbstractController(cc) {
 
+    def writeConverter () :Unit = {
+      // basic types
+      val jsonString = Json.toJson("Fiver")
+      println("Json to String (infiere el tipo): " + jsonString)
+      val jsonNumber = Json.toJson(4)
+      println("Json to Number: " + jsonNumber)
+      val jsonBoolean = Json.toJson(false)
+      println("Json to Boolean: " + jsonBoolean)
+
+      // collections of basic types
+      val jsonArrayOfInts = Json.toJson(Seq(1, 2, 3, 4))
+      println(" Json to Array of int: " + jsonArrayOfInts)
+      val jsonArrayOfStrings = Json.toJson(List("Fiver", "Bigwig"))
+      println("Json to array of String: " + jsonArrayOfStrings)
+
+    }
+
     def indexparking() = Action {
       Ok(views.html.index2(""))
     }
@@ -30,24 +47,6 @@ package controllers
           Ok(Json.obj("status" ->"OK", "message" -> ("Placa '"+parqueoVehiculo.placa+"' saved.") ))
         }
       )
-    }
-
-    def ingresovehiculo4 = Action(parse.json) { request =>
-      val parqueoResult = request.body.validate[ParqueoVehiculo]
-      parqueoResult.fold(
-        errors => {
-          BadRequest(Json.obj("status" ->"KO", "message" -> JsError.toJson(errors)))
-        },
-        parqueoVehiculo => {
-          ParqueoVehiculo.save(parqueoVehiculo)
-          Ok(Json.obj("status" ->"OK", "message" -> ("Placa '"+parqueoVehiculo.placa+"' saved.") ))
-        }
-      )
-    }
-
-    def ingresovehiculo2 = Action {
-        //Results.Ok
-      Ok(views.html.index2(s"Test Json..." ))
     }
 
     def salidavehiculo(placa:String) = Action {
@@ -130,22 +129,7 @@ package controllers
       )
     }
 
-    def writeConverter () :Unit = {
-      // basic types
-      val jsonString = Json.toJson("Fiver")
-      println("Json to String (infiere el tipo): " + jsonString)
-      val jsonNumber = Json.toJson(4)
-      println("Json to Number: " + jsonNumber)
-      val jsonBoolean = Json.toJson(false)
-      println("Json to Boolean: " + jsonBoolean)
 
-      // collections of basic types
-      val jsonArrayOfInts = Json.toJson(Seq(1, 2, 3, 4))
-      println(" Json to Array of int: " + jsonArrayOfInts)
-      val jsonArrayOfStrings = Json.toJson(List("Fiver", "Bigwig"))
-      println("Json to array of String: " + jsonArrayOfStrings)
-
-    }
 
     def stringUtilidadAndBusqueda () : Unit = {
 

@@ -21,7 +21,6 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 POST  /jsonparqueadero              controllers.JsonParqueaderoController.ingresovehiculo
 PUT   /jsonparqueadero/:placa       controllers.JsonParqueaderoController.salidavehiculo(placa)
 GET   /jsonparqueadero              controllers.JsonParqueaderoController.vehiculosparqueados
-
 GET   /index                        controllers.JsonParqueaderoController.indexparking
 
 
@@ -31,13 +30,13 @@ GET   /index                        controllers.JsonParqueaderoController.indexp
 # CRUD PARQUEADERO
 GET   /index2                       controllers.HomeController.index
 
-GET   /parking                      controllers.ParkingController.index
-GET   /parking/create               controllers.ParkingController.create
-GET   /parking/:placa               controllers.ParkingController.show(placa:String)
-GET   /parking/edit/:placa          controllers.ParkingController.edit(placa:String)
-POST  /parking/edit                 controllers.ParkingController.update
-POST  /parking/create               controllers.ParkingController.save
-GET   /parking/delete/:placa        controllers.ParkingController.destroy(placa:String)
+GET     /parking                    controllers.ParkingController.index
+GET     /parking/create             controllers.ParkingController.create
+GET     /parking/:placa             controllers.ParkingController.show(placa:String)
+GET     /parking/edit/:placa        controllers.ParkingController.edit(placa:String)
+PUT     /parking/edit               controllers.ParkingController.update
+POST    /parking/create             controllers.ParkingController.save
+DELETE  /parking/delete/:placa      controllers.ParkingController.destroy(placa:String)
 
 
 
