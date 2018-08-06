@@ -28,16 +28,16 @@
             <td>@vehiculo.fechaIngreso</td>
             <td><a class="btn btn-primary" href="@routes.ParkingController.edit(vehiculo.placa)">Salida vehiculo</a></td>
             <td>
-                <button class="btn btn-danger" onclick="sendDeleteRequest(
-                '@routes.ParkingController.destroy(vehiculo.placa)',
-                '@routes.ParkingController.index()'
-                )">Delete</button>
-
                 <!--
+                <button class="btn btn-danger" onclick="sendDeleteRequest('@routes.ParkingController.destroy(vehiculo.placa)', '@routes.ParkingController.index()')">
+                    Delete
+                </button>
+                -->
+
                 <a class="btn btn-danger" href="@routes.ParkingController.destroy(vehiculo.placa)">
                     Delete
                 </a>
-                -->
+
             </td>
         </tr>
     }

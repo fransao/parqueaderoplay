@@ -33,10 +33,12 @@ GET     /parking                    controllers.ParkingController.index
 GET     /parking/create             controllers.ParkingController.create
 GET     /parking/:placa             controllers.ParkingController.show(placa:String)
 GET     /parking/edit/:placa        controllers.ParkingController.edit(placa:String)
-PUT     /parking/edit               controllers.ParkingController.update
+POST    /parking/edit               controllers.ParkingController.update
 POST    /parking/create             controllers.ParkingController.save
-DELETE  /parking/delete/:placa      controllers.ParkingController.destroy(placa:String)
+GET     /parking/delete/:placa      controllers.ParkingController.destroy(placa:String)
 
 
+#PUT     /parking/edit               controllers.ParkingController.update
+#DELETE  /parking/delete/:placa      controllers.ParkingController.destroy(placa:String)
 
 

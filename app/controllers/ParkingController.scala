@@ -70,9 +70,14 @@ class ParkingController @Inject()( cc: ControllerComponents)(implicit assetsFind
     val vigilante = new Vigilante(database)
 
     val vehiculo = vigilante.obtenerVehiculoIngresado(new Vehiculo(placa, EnumTipoVehiculo.CARRO))
-    val anyData = Map("placa" -> vehiculo.placa, "tipoVehiculo" -> vehiculo.tipoVehiculo.toString, "cilindraje" -> "")
 
-    Ok(views.html.parking.edit(vehiculoForm.bind(anyData)))
+    if (vehiculo == null) {
+      Ok(views.html.parking.edit(vehiculoForm))
+    } else {
+      val anyData = Map("placa" -> vehiculo.placa, "tipoVehiculo" -> vehiculo.tipoVehiculo.toString, "cilindraje" -> "")
+      Ok(views.html.parking.edit(vehiculoForm.bind(anyData)))
+    }
+
   }
 
   def update = Action { implicit request =>
